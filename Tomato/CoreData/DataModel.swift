@@ -17,6 +17,7 @@ struct TimeSession: Codable, Identifiable {
     var duration: Double
     var sessionType: SessionType
     let deviceIdentifier: String
+    var totalsessions: Int32
     
     // 添加字典转换方法
     var dictionaryRepresentation: [String: Any] {
@@ -25,7 +26,8 @@ struct TimeSession: Codable, Identifiable {
             "startDate": startDate,
             "duration": duration,
             "sessionType": sessionType.rawValue,
-            "deviceIdentifier": deviceIdentifier
+            "deviceIdentifier": deviceIdentifier,
+            "totalsessions": totalsessions
         ]
     }
 }

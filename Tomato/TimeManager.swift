@@ -33,7 +33,7 @@ class TimerManager: NSObject, ObservableObject {  // 改为继承NSObject
         didSet { canChangeTime = (timerState == .stopped) }
     }
     @Published var totalTimeToday: Double = 0.0
-    @Published var totalSessions: Int = 0
+    @Published var totalSessions: Int32 = 0
     @Published var canChangeTime: Bool = true
     // 在 TimerManager 中添加
     @Published var enableNotifications = true
@@ -210,7 +210,8 @@ class TimerManager: NSObject, ObservableObject {  // 改为继承NSObject
             startDate: startTime,
             duration: duration,
             sessionType: currentSessionType,
-            deviceIdentifier: UIDevice.current.identifierForVendor?.uuidString ?? ""
+            deviceIdentifier: UIDevice.current.identifierForVendor?.uuidString ?? "",
+            totalsessions: totalSessions
         )
         
         CoreDataManager.shared.saveSession(session: session)
@@ -351,7 +352,8 @@ class TimerManager: NSObject, ObservableObject {  // 改为继承NSObject
             startDate: startTime ?? Date(),
             duration: totalTimeToday,
             sessionType: currentSessionType,
-            deviceIdentifier: UIDevice.current.identifierForVendor?.uuidString ?? ""
+            deviceIdentifier: UIDevice.current.identifierForVendor?.uuidString ?? "",
+            totalsessions: totalSessions
         )
         
         // 双写策略
@@ -393,7 +395,8 @@ class TimerManager: NSObject, ObservableObject {  // 改为继承NSObject
             startDate: startTime!,
             duration: Date().timeIntervalSince(startTime!),
             sessionType: currentSessionType,
-            deviceIdentifier: UIDevice.current.identifierForVendor?.uuidString ?? ""
+            deviceIdentifier: UIDevice.current.identifierForVendor?.uuidString ?? "",
+            totalsessions: totalSessions
         )
         CoreDataManager.shared.markSessionAsCompleted(session)
         stopTimer()

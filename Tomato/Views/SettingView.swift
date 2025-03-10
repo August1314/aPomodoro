@@ -126,8 +126,10 @@ struct DataView: View {
             .reduce(0) { $0 + $1.duration }
     }
     
-    private var totalSessions: Int {
-        sessions.count
+    private var totalSessions: Int32 {
+        sessions
+            .filter { $0.startDate >= today }
+            .reduce(0) { $0 + $1.totalsessions }
     }
     
     var body: some View {
@@ -135,7 +137,7 @@ struct DataView: View {
             Section {
                 StatRow(icon: "clock", title: "总专注次数", value: "\(totalSessions)")
                 StatRow(icon: "hourglass", title: "总专注时间",
-                       value: "\(String(format: "%.1f", totalTimeToday)) 小时")
+                       value: "\(String(format: "%.f", totalTimeToday/60)) 分钟")
             } header: {
                 Text("历史统计").foregroundColor(.black)
             }
@@ -144,7 +146,7 @@ struct DataView: View {
                 ProgressView(value: Double(totalSessions)/100) {
                     Text("百次专注").foregroundColor(.black)
                 }
-                ProgressView(value: Double(totalTimeToday)/60) {
+                ProgressView(value: Double(totalTimeToday)/3600) {
                     Text("百小时成就").foregroundColor(.black)
                 }
             } header: {
@@ -164,8 +166,8 @@ struct StatRow: View {
     
     var body: some View {
         HStack {
-            Image(systemName: icon)
             Text(title)
+                .foregroundColor(.primary) // ✨ 直接设置文本颜色
             Spacer()
             Text(value)
                 .foregroundColor(.secondary)

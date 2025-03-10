@@ -35,6 +35,7 @@ class CoreDataManager {
             entity.duration = session.duration
             entity.sessionType = session.sessionType.rawValue
             entity.deviceIdentifier = session.deviceIdentifier
+            entity.totalsessions = session.totalsessions
             
             try context.save()
         } catch {
@@ -65,6 +66,7 @@ class CoreDataManager {
                 entity.duration = session.duration
                 entity.sessionType = session.sessionType.rawValue
                 entity.deviceIdentifier = session.deviceIdentifier
+                entity.totalsessions = session.totalsessions
             }
             
             do {
@@ -95,7 +97,8 @@ class CoreDataManager {
                     startDate: startDate,
                     duration: entity.duration,
                     sessionType: sessionType,
-                    deviceIdentifier: deviceIdentifier
+                    deviceIdentifier: deviceIdentifier,
+                    totalsessions: entity.totalsessions
                 )
             }
         } catch {
@@ -132,7 +135,8 @@ class CoreDataManager {
                     startDate: startDate,
                     duration: entity.duration,
                     sessionType: sessionType,
-                    deviceIdentifier: deviceIdentifier
+                    deviceIdentifier: deviceIdentifier,
+                    totalsessions: entity.totalsessions
                 )
             }
         } catch {
@@ -152,6 +156,7 @@ class CoreDataManager {
             if let entity = results.first {
                 entity.completeDate = Date() // 添加完成时间
                 entity.duration = session.duration // 更新实际持续时间
+                entity.totalsessions = session.totalsessions
                 saveContext()
             }
         } catch {
