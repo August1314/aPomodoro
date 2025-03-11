@@ -211,7 +211,7 @@ class TimerManager: NSObject, ObservableObject {  // 改为继承NSObject
             duration: duration,
             sessionType: currentSessionType,
             deviceIdentifier: UIDevice.current.identifierForVendor?.uuidString ?? "",
-            totalsessions: totalSessions
+            totalSessions: totalSessions
         )
         
         CoreDataManager.shared.saveSession(session: session)
@@ -353,7 +353,7 @@ class TimerManager: NSObject, ObservableObject {  // 改为继承NSObject
             duration: totalTimeToday,
             sessionType: currentSessionType,
             deviceIdentifier: UIDevice.current.identifierForVendor?.uuidString ?? "",
-            totalsessions: totalSessions
+            totalSessions: totalSessions
         )
         
         // 双写策略
@@ -396,7 +396,7 @@ class TimerManager: NSObject, ObservableObject {  // 改为继承NSObject
             duration: Date().timeIntervalSince(startTime!),
             sessionType: currentSessionType,
             deviceIdentifier: UIDevice.current.identifierForVendor?.uuidString ?? "",
-            totalsessions: totalSessions
+            totalSessions: totalSessions
         )
         CoreDataManager.shared.markSessionAsCompleted(session)
         stopTimer()

@@ -35,7 +35,7 @@ class CoreDataManager {
             entity.duration = session.duration
             entity.sessionType = session.sessionType.rawValue
             entity.deviceIdentifier = session.deviceIdentifier
-            entity.totalsessions = session.totalsessions
+            entity.totalSessions = session.totalSessions
             
             try context.save()
         } catch {
@@ -66,7 +66,7 @@ class CoreDataManager {
                 entity.duration = session.duration
                 entity.sessionType = session.sessionType.rawValue
                 entity.deviceIdentifier = session.deviceIdentifier
-                entity.totalsessions = session.totalsessions
+                entity.totalSessions = session.totalSessions
             }
             
             do {
@@ -98,7 +98,7 @@ class CoreDataManager {
                     duration: entity.duration,
                     sessionType: sessionType,
                     deviceIdentifier: deviceIdentifier,
-                    totalsessions: entity.totalsessions
+                    totalSessions: entity.totalSessions
                 )
             }
         } catch {
@@ -136,7 +136,7 @@ class CoreDataManager {
                     duration: entity.duration,
                     sessionType: sessionType,
                     deviceIdentifier: deviceIdentifier,
-                    totalsessions: entity.totalsessions
+                    totalSessions: entity.totalSessions
                 )
             }
         } catch {
@@ -156,11 +156,59 @@ class CoreDataManager {
             if let entity = results.first {
                 entity.completeDate = Date() // 添加完成时间
                 entity.duration = session.duration // 更新实际持续时间
-                entity.totalsessions = session.totalsessions
+                entity.totalSessions = session.totalSessions
                 saveContext()
             }
         } catch {
             print("标记完成失败: \(error)")
         }
     }
+}
+
+func getTotalSessionsToday() -> Int32 {
+    var sessions: [TimeSession] {
+        CoreDataManager.shared.fetchSessions()
+    }
+    
+    var today: Date {
+        Calendar.current.startOfDay(for: Date())
+    }
+    
+    // 计算属性替代变量赋值
+    var totalTimeToday: Double {
+        sessions
+            .filter { $0.startDate >= today }
+            .reduce(0) { $0 + $1.duration }
+    }
+    
+    var totalSessionsToday: Int32 {
+        sessions
+            .filter { $0.startDate >= today }
+            .reduce(0) { $0 + $1.totalSessions }
+    }
+    return totalSessionsToday
+}
+
+func getTotalTimeToday() -> Double {
+    var sessions: [TimeSession] {
+        CoreDataManager.shared.fetchSessions()
+    }
+    
+    var today: Date {
+        Calendar.current.startOfDay(for: Date())
+    }
+    
+    // 计算属性替代变量赋值
+    var totalTimeToday: Double {
+        sessions
+            .filter { $0.startDate >= today }
+            .reduce(0) { $0 + $1.duration }
+    }
+    
+    var totalSessions: Int32 {
+        sessions
+            .filter { $0.startDate >= today }
+            .reduce(0) { $0 + $1.totalSessions }
+    }
+    return totalTimeToday
 }

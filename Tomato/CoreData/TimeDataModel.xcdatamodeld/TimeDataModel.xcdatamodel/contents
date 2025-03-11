@@ -7,6 +7,6 @@
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="sessionType" optional="YES" attributeType="String"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="totalsessions" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalSessions" optional="YES" attributeType="Integer 32" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
 </model>

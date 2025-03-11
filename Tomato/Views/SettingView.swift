@@ -120,16 +120,14 @@ struct DataView: View {
     }
     
     // 计算属性替代变量赋值
-    private var totalTimeToday: Double {
+    private var totalTime: Double {
         sessions
-            .filter { $0.startDate >= today }
             .reduce(0) { $0 + $1.duration }
     }
     
     private var totalSessions: Int32 {
         sessions
-            .filter { $0.startDate >= today }
-            .reduce(0) { $0 + $1.totalsessions }
+            .reduce(0) { $0 + $1.totalSessions }
     }
     
     var body: some View {
@@ -137,7 +135,7 @@ struct DataView: View {
             Section {
                 StatRow(icon: "clock", title: "总专注次数", value: "\(totalSessions)")
                 StatRow(icon: "hourglass", title: "总专注时间",
-                       value: "\(String(format: "%.f", totalTimeToday/60)) 分钟")
+                       value: "\(String(format: "%.f", totalTime/60)) 分钟")
             } header: {
                 Text("历史统计").foregroundColor(.black)
             }
@@ -146,7 +144,7 @@ struct DataView: View {
                 ProgressView(value: Double(totalSessions)/100) {
                     Text("百次专注").foregroundColor(.black)
                 }
-                ProgressView(value: Double(totalTimeToday)/3600) {
+                ProgressView(value: Double(totalTime)/3600) {
                     Text("百小时成就").foregroundColor(.black)
                 }
             } header: {

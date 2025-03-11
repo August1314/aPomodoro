@@ -43,6 +43,14 @@ struct ContentView: View {
         AppTheme(rawValue: selectedTheme)?.colors ?? [.indigo, .blue]
     }
     
+    private var totalTimeToday:Double {
+        getTotalTimeToday()
+    }
+    
+    private var totalSessionsToday:Int32 {
+        getTotalSessionsToday()
+    }
+    
     var body: some View {
         NavigationStack { // 改为导航视图
             ZStack {
@@ -104,7 +112,7 @@ struct ContentView: View {
         
     private func statsSection() -> some View {
         HStack(spacing: 25){
-            StatBadge(icon: "hourglass", value: "\(Int(timerManager.totalTimeToday)) min")
+            StatBadge(icon: "hourglass", value: "\(Int(totalTimeToday)/60) min")
             SettingsButton
                 .padding(.horizontal,20)
         }
